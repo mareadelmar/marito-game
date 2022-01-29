@@ -40,7 +40,7 @@ window.addEventListener("keyup", ({ keyCode }) => {
 			player.velocity.y = 0;
 			break;
 		case 40:
-			player.velocit.y = 0;
+			player.velocity.y = 0;
 			break;
 		case 37:
 			keys.left.pressed = false;
