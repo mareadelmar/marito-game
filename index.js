@@ -19,16 +19,17 @@ const keys = {
 };
 
 window.addEventListener("keydown", ({ keyCode }) => {
+	console.log(keyCode);
 	switch (keyCode) {
-		case 38:
+		case 38: // 87
 			player.velocity.y -= 20;
 			break;
-		case 40:
+		case 40: // 83
 			break;
-		case 37:
+		case 37: // 65
 			keys.left.pressed = true;
 			break;
-		case 39:
+		case 39: // 68
 			keys.right.pressed = true;
 			break;
 	}
