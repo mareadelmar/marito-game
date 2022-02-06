@@ -18,8 +18,10 @@ const keys = {
 	},
 };
 
+// trackear en qué parte del escenario está el player
+let scrollPosition = 0;
+
 window.addEventListener("keydown", ({ keyCode }) => {
-	console.log(keyCode);
 	switch (keyCode) {
 		case 38: // 87
 			player.velocity.y -= 20;
@@ -131,17 +133,21 @@ function animate() {
 	} else {
 		player.velocity.x = 0;
 
-		// si el player se mueve más allá de los límites, que se mueva el fondo
+		// si el player se mueve más allá de los límites, que se mueva el fondo (scroll background)
 		if (keys.right.pressed) {
+			scrollPosition -= 5;
 			platforms.forEach(platform => {
 				platform.position.x -= 5;
 			});
 		} else if (keys.left.pressed) {
+			scrollPosition += 5;
 			platforms.forEach(platform => {
 				platform.position.x += 5;
 			});
 		}
 	}
+
+	console.log("scrollPosition -->", scrollPosition);
 
 	platforms.forEach(platform => {
 		// controlar la coalisión de player y plataforma (object collision detection)
@@ -162,6 +168,10 @@ function animate() {
 			playerLeftSide <= platformRightSide
 		) {
 			player.velocity.y = 0;
+		}
+
+		if (scrollPosition < -2000) {
+			console.log("YOU WIN");
 		}
 	});
 }
