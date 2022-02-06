@@ -88,10 +88,10 @@ class Player {
 }
 
 class Platform {
-	constructor() {
+	constructor({ x, y }) {
 		this.position = {
-			x: 400,
-			y: 400,
+			x,
+			y,
 		};
 		this.width = 200;
 		this.height = 20;
@@ -104,15 +104,21 @@ class Platform {
 }
 
 const player = new Player();
-const platform = new Platform();
-//player.update();
+const platforms = [
+	new Platform({ x: 300, y: 400 }),
+	new Platform({ x: 500, y: 300 }),
+	new Platform({ x: 700, y: 200 }),
+];
 
 //función animation loop
 function animate() {
 	requestAnimationFrame(animate);
 	c.clearRect(0, 0, canvas.width, canvas.height);
 	player.update();
-	platform.draw();
+
+	platforms.forEach(platform => {
+		platform.draw();
+	});
 
 	// controlar la movilidad del eje x:
 	if (keys.right.pressed && player.position.x <= BACKGROUND_RIGHT_LIMIT) {
@@ -127,31 +133,37 @@ function animate() {
 
 		// si el player se mueve más allá de los límites, que se mueva el fondo
 		if (keys.right.pressed) {
-			platform.position.x -= 5;
+			platforms.forEach(platform => {
+				platform.position.x -= 5;
+			});
 		} else if (keys.left.pressed) {
-			platform.position.x += 5;
+			platforms.forEach(platform => {
+				platform.position.x += 5;
+			});
 		}
 	}
 
-	// controlar la coalisión de player y plataforma (object collision detection)
-	const playerBottomSide = player.position.y + player.height;
-	const playerTopSide = player.position.y;
-	const playerRightSide = player.position.x + player.width;
-	const playerLeftSide = player.position.x;
+	platforms.forEach(platform => {
+		// controlar la coalisión de player y plataforma (object collision detection)
+		const playerBottomSide = player.position.y + player.height;
+		const playerTopSide = player.position.y;
+		const playerRightSide = player.position.x + player.width;
+		const playerLeftSide = player.position.x;
 
-	const platformTopSide = platform.position.y;
-	const platformBottomSide = platform.position.y + platform.height;
-	const platformLeftSide = platform.position.x;
-	const platformRightSide = platform.position.x + platform.width;
+		const platformTopSide = platform.position.y;
+		const platformBottomSide = platform.position.y + platform.height;
+		const platformLeftSide = platform.position.x;
+		const platformRightSide = platform.position.x + platform.width;
 
-	if (
-		playerBottomSide <= platformTopSide &&
-		playerBottomSide + player.velocity.y >= platformTopSide &&
-		playerRightSide >= platformLeftSide &&
-		playerLeftSide <= platformRightSide
-	) {
-		player.velocity.y = 0;
-	}
+		if (
+			playerBottomSide <= platformTopSide &&
+			playerBottomSide + player.velocity.y >= platformTopSide &&
+			playerRightSide >= platformLeftSide &&
+			playerLeftSide <= platformRightSide
+		) {
+			player.velocity.y = 0;
+		}
+	});
 }
 
 animate();
