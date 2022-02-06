@@ -1,3 +1,7 @@
+import "./style.css";
+import platform from "./images/platform.png";
+console.log(platform);
+
 const canvas = document.querySelector("canvas");
 canvas.width = 1080;
 canvas.height = 608;
