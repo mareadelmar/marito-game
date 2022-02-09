@@ -114,9 +114,9 @@ image.src = platform;
 
 const player = new Player();
 const platforms = [
-	new Platform({ x: 300, y: 400, image }),
-	new Platform({ x: 800, y: 300, image }),
-	new Platform({ x: 1300, y: 200, image }),
+	new Platform({ x: -1, y: 485, image }),
+	new Platform({ x: image.width - 3, y: 485, image }),
+	new Platform({ x: image.width * 2 + 100, y: 485, image }),
 ];
 
 //función animation loop
