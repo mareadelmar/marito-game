@@ -94,37 +94,44 @@ class Player {
 }
 
 class Platform {
-	constructor({ x, y }) {
+	constructor({ x, y, image }) {
 		this.position = {
 			x,
 			y,
 		};
-		this.width = 200;
-		this.height = 20;
+		this.image = image;
+		this.width = image.width;
+		this.height = image.height;
 	}
 
 	draw() {
-		c.fillStyle = "green";
-		c.fillRect(this.position.x, this.position.y, this.width, this.height);
+		// c.fillStyle = "green";
+		// c.fillRect(this.position.x, this.position.y, this.width, this.height);
+		c.drawImage(this.image, this.position.x, this.position.y);
 	}
 }
 
+//const image = new Image();
+const image = document.createElement("img");
+image.src = platform;
+
 const player = new Player();
 const platforms = [
-	new Platform({ x: 300, y: 400 }),
-	new Platform({ x: 500, y: 300 }),
-	new Platform({ x: 700, y: 200 }),
+	new Platform({ x: 300, y: 400, image }),
+	new Platform({ x: 800, y: 300, image }),
+	new Platform({ x: 1300, y: 200, image }),
 ];
 
 //función animation loop
 function animate() {
 	requestAnimationFrame(animate);
 	c.clearRect(0, 0, canvas.width, canvas.height);
-	player.update();
 
 	platforms.forEach(platform => {
 		platform.draw();
 	});
+	// siempre llamar últimoal player: estará arriba de todo
+	player.update();
 
 	// controlar la movilidad del eje x:
 	if (keys.right.pressed && player.position.x <= BACKGROUND_RIGHT_LIMIT) {
