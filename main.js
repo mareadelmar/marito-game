@@ -84,8 +84,6 @@ class Player {
 		// gravedad: si está cayendo que acelere y si lleg al piso que sea cero
 		if (this.position.y + this.height + this.velocity.y <= canvas.height) {
 			this.velocity.y += GRAVITY;
-		} else {
-			this.velocity.y = 0;
 		}
 	}
 }
@@ -109,15 +107,25 @@ class Platform {
 }
 
 //const image = new Image();
-const image = document.createElement("img");
+let image = document.createElement("img");
 image.src = platform;
 
-const player = new Player();
-const platforms = [
-	new Platform({ x: -1, y: 485, image }),
-	new Platform({ x: image.width - 3, y: 485, image }),
-	new Platform({ x: image.width * 2 + 100, y: 485, image }),
-];
+let player = new Player();
+let platforms = [];
+
+function init() {
+	image = document.createElement("img");
+	image.src = platform;
+
+	player = new Player();
+	platforms = [
+		new Platform({ x: -1, y: 485, image }),
+		new Platform({ x: image.width - 3, y: 485, image }),
+		new Platform({ x: image.width * 2 + 100, y: 485, image }),
+	];
+
+	scrollPosition = 0;
+}
 
 //función animation loop
 function animate() {
@@ -180,7 +188,13 @@ function animate() {
 		if (scrollPosition < -2000) {
 			console.log("YOU WIN");
 		}
+
+		if (player.position.y > canvas.height) {
+			console.log("YOU LOSE");
+			init();
+		}
 	});
 }
 
 animate();
+init();
