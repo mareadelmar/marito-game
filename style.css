@@ -1,8 +1,14 @@
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+	height: 100vh;
+	margin: 0;
+	background-color: rgb(56, 0, 95);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+canvas {
+	background-color: blanchedalmond;
+	width: 1080px;
+	height: 608px;
 }
