@@ -71,7 +71,7 @@ class Player {
 	}
 
 	draw() {
-		c.fillStyle = "darkcyan";
+		c.fillStyle = "salmon";
 		c.fillRect(this.position.x, this.position.y, this.width, this.height);
 	}
 
@@ -122,7 +122,8 @@ const platforms = [
 //función animation loop
 function animate() {
 	requestAnimationFrame(animate);
-	c.clearRect(0, 0, canvas.width, canvas.height);
+	c.fillStyle = "#f2f2f2";
+	c.fillRect(0, 0, canvas.width, canvas.height);
 
 	platforms.forEach(platform => {
 		platform.draw();
@@ -154,8 +155,6 @@ function animate() {
 			});
 		}
 	}
-
-	console.log("scrollPosition -->", scrollPosition);
 
 	platforms.forEach(platform => {
 		// controlar la coalisión de player y plataforma (object collision detection)
