@@ -25,7 +25,7 @@ let scrollPosition = 0;
 window.addEventListener("keydown", ({ keyCode }) => {
 	switch (keyCode) {
 		case 38: // 87
-			player.velocity.y -= 20;
+			player.velocity.y -= 10;
 			break;
 		case 40: // 83
 			break;
@@ -41,7 +41,7 @@ window.addEventListener("keydown", ({ keyCode }) => {
 window.addEventListener("keyup", ({ keyCode }) => {
 	switch (keyCode) {
 		case 38:
-			player.velocity.y = 0;
+			//player.velocity.y = 0;
 			break;
 		case 40:
 			player.velocity.y = 0;
@@ -57,6 +57,7 @@ window.addEventListener("keyup", ({ keyCode }) => {
 
 class Player {
 	constructor() {
+		this.speed = 10;
 		this.position = {
 			x: 100,
 			y: 100,
@@ -141,25 +142,25 @@ function animate() {
 
 	// controlar la movilidad del eje x:
 	if (keys.right.pressed && player.position.x <= BACKGROUND_RIGHT_LIMIT) {
-		player.velocity.x = 5;
+		player.velocity.x = player.speed;
 	} else if (
 		keys.left.pressed &&
 		player.position.x >= BACKGROUND_LEFT_LIMIT
 	) {
-		player.velocity.x = -5;
+		player.velocity.x = -player.speed;
 	} else {
 		player.velocity.x = 0;
 
 		// si el player se mueve más allá de los límites, que se mueva el fondo (scroll background)
 		if (keys.right.pressed) {
-			scrollPosition -= 5;
+			scrollPosition -= player.speed;
 			platforms.forEach(platform => {
-				platform.position.x -= 5;
+				platform.position.x -= player.speed * 0.66;
 			});
 		} else if (keys.left.pressed) {
-			scrollPosition += 5;
+			scrollPosition += player.speed;
 			platforms.forEach(platform => {
-				platform.position.x += 5;
+				platform.position.x += player.speed * 0.66;
 			});
 		}
 	}
