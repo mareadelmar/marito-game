@@ -1,4 +1,5 @@
 import platform from "./images/platform.png";
+import platformTall from "./images/platformTall.png";
 
 const canvas = document.querySelector("canvas");
 canvas.width = 1080;
@@ -107,26 +108,50 @@ class Platform {
 	}
 }
 
-//const image = new Image();
-let image = document.createElement("img");
-image.src = platform;
+const createImg = imgSrc => {
+	let image = document.createElement("img");
+	image.src = imgSrc;
+	return image;
+};
+
+console.log(createImg(platform));
 
 let player = new Player();
 let platforms = [];
+const platformImg = createImg(platform);
+const platformTallImg = createImg(platformTall);
 
 function init() {
-	image = document.createElement("img");
-	image.src = platform;
-
 	player = new Player();
 	platforms = [
-		new Platform({ x: -1, y: 485, image }),
-		new Platform({ x: image.width - 3, y: 485, image }),
-		new Platform({ x: image.width * 2 + 100, y: 485, image }),
+		new Platform({
+			x: platformImg.width * 4 + 200 + platformTallImg.width - 5,
+			y: 285,
+			image: platformTallImg,
+		}),
+		new Platform({ x: -1, y: 485, image: platformImg }),
+		new Platform({ x: platformImg.width - 3, y: 485, image: platformImg }),
+		new Platform({
+			x: platformImg.width * 2 + 100,
+			y: 485,
+			image: platformImg,
+		}),
+		new Platform({
+			x: platformImg.width * 3 + 200,
+			y: 485,
+			image: platformImg,
+		}),
+		new Platform({
+			x: platformImg.width * 4 + 200 - 3,
+			y: 485,
+			image: platformImg,
+		}),
 	];
 
 	scrollPosition = 0;
 }
+
+console.log(scrollPosition);
 
 //función animation loop
 function animate() {
@@ -155,12 +180,12 @@ function animate() {
 		if (keys.right.pressed) {
 			scrollPosition -= player.speed;
 			platforms.forEach(platform => {
-				platform.position.x -= player.speed * 0.66;
+				platform.position.x -= player.speed;
 			});
 		} else if (keys.left.pressed) {
 			scrollPosition += player.speed;
 			platforms.forEach(platform => {
-				platform.position.x += player.speed * 0.66;
+				platform.position.x += player.speed;
 			});
 		}
 	}
